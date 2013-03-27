@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
     <fragment
-    	android:name="com.j2w3.rbarnes.seattlecoffeelocator.CoffeeListFragment"
+    	android:name="com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeListFragment"
     	android:layout_width="match_parent"
     	android:layout_height="match_parent"
     	android:id="@+id/coffeelist_fragment">

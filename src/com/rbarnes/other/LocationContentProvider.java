@@ -18,7 +18,9 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 public class LocationContentProvider extends ContentProvider{
 
@@ -40,6 +42,7 @@ public class LocationContentProvider extends ContentProvider{
 	 
 	 
 	static final UriMatcher matcher=new UriMatcher(UriMatcher.NO_MATCH);
+	
 	 static{
 	  matcher.addURI(AUTHORITY, BASE_PATH , LOCATIONS );
 	  matcher.addURI(AUTHORITY, BASE_PATH + "/#", LOCATION);
@@ -56,22 +59,30 @@ public class LocationContentProvider extends ContentProvider{
 
 	@Override
 	public String getType(Uri uri) {
-		// TODO Auto-generated method stub
-		return null;
+		int uriType = matcher.match(uri);
+        switch (uriType) {
+        case LOCATIONS:
+            return CONTENT_TYPE;
+        case LOCATION:
+            return CONTENT_ITEM_TYPE;
+        default:
+            return null;
+        }
 	}
 
 	@Override
 	public Uri insert(Uri uri, ContentValues inValues) {
 		ContentValues values = new ContentValues(inValues);
-		long rowId = db.insert(LocationDB.TABLE_NAME, null, values);
+		long rowId = db.insertOrThrow(LocationDB.TABLE_NAME, null, values);
 		if(rowId > 0){
-		Uri url = ContentUris.withAppendedId(CONTENT_URI, rowId);
-		getContext().getContentResolver().notifyChange(url, null);
-
+			Uri url = ContentUris.withAppendedId(CONTENT_URI, rowId);
+			getContext().getContentResolver().notifyChange(url, null);
+		
 		return uri;
 		}else{
 		throw new SQLException("Failed to insert row into " + uri);
 		}
+
 	}
 
 	@Override
@@ -83,11 +94,27 @@ public class LocationContentProvider extends ContentProvider{
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sort) {
+		Log.i("CURSOR_URI", uri.toString());
+		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(LocationDB.TABLE_NAME);
+        
+        int uriType = matcher.match(uri);
+        switch (uriType) {
+        case LOCATION:
+            queryBuilder.appendWhere(LocationDB.ID + "="
+                    + uri.getLastPathSegment());
+            break;
+        case LOCATIONS:
+            // no filter
+            break;
+        default:
+            
+        }
+        
+			Cursor c =  queryBuilder.query(db,projection, selection, selectionArgs, null, null, sort);
+			c.setNotificationUri(getContext().getContentResolver(), uri);
+			return c;
 
-		
-		Cursor c = db.query(LocationDB.TABLE_NAME, projection, selection, selectionArgs, null, null, sort);
-		c.setNotificationUri(getContext().getContentResolver(), uri);
-		return c;
 		
 
 	}

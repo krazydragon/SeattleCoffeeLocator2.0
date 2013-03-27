@@ -9,7 +9,7 @@
         android:id="@+id/detailFragment"
         android:layout_width="0dip"
         android:layout_height="match_parent"
-        class="com.j2w3.rbarnes.seattlecoffeelocator.CoffeeDetailFragment" 
+        class="com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeDetailFragment" 
         android:layout_weight="1" >
     </fragment>
 

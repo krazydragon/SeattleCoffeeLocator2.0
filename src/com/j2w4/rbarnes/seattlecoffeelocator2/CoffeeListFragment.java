@@ -29,13 +29,13 @@ import android.widget.ListView;
 public class CoffeeListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private OnLocationSelectedListener locationSelectedListener;
-    private static final int LOCATION_LIST_LOADER = 1;
+    private static final int LOCATION_LIST_LOADER = 2;
 
     private SimpleCursorAdapter adapter;
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        String projection[] = { LocationDB.COL_PHONE };
+        String projection[] = { LocationDB.COL_TITLE, LocationDB.COL_ADDRESS, LocationDB.COL_CITY, LocationDB.COL_STATE, LocationDB.COL_PHONE, LocationDB.COL_COORDS};
         Cursor locationCursor = getActivity().getContentResolver().query(
                 Uri.withAppendedPath(LocationContentProvider.CONTENT_URI,
                         String.valueOf(id)), projection, null, null, null);

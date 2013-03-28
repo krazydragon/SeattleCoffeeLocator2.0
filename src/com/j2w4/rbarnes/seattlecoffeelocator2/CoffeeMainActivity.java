@@ -38,7 +38,7 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		
 		if(serviceStarted == 0){
 			//Start Service load data
-			//startService(new Intent(this, CoffeeService.class));	
+			startService(new Intent(this, CoffeeService.class));	
 			serviceStarted ++;
 			
 		}

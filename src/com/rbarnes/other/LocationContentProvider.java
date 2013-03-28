@@ -24,9 +24,9 @@ import android.util.Log;
 
 public class LocationContentProvider extends ContentProvider{
 
-	public static final String AUTHORITY = "content://com.rbarnes.other.LocationContentProvider";
+	public static final String AUTHORITY = "com.rbarnes.other.LocationContentProvider";
 	private static final String BASE_PATH = "locations";
-	public static final Uri CONTENT_URI = Uri.parse(AUTHORITY + "/" + BASE_PATH);
+	public static final Uri CONTENT_URI = Uri.parse("content://"+AUTHORITY + "/" + BASE_PATH);
 	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
 	        + "/locationDB";
 	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -35,18 +35,24 @@ public class LocationContentProvider extends ContentProvider{
 	
 	
 	private SQLiteDatabase db;
-	
+	 private static final UriMatcher sURIMatcher = makeUriMatcher();
 	//URiMatcher to match client URis
 	 public static final int LOCATIONS = 1;
 	 public static final int LOCATION = 2;
 	 
-	 
-	static final UriMatcher matcher=new UriMatcher(UriMatcher.NO_MATCH);
+	 private static UriMatcher makeUriMatcher() {
+
+		    UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+		    matcher.addURI(AUTHORITY,  BASE_PATH , LOCATIONS );
+			  matcher.addURI(AUTHORITY,  BASE_PATH + "/#", LOCATION);
+		  
+		    return matcher;
+		}
 	
-	 static{
-	  matcher.addURI(AUTHORITY, BASE_PATH , LOCATIONS );
-	  matcher.addURI(AUTHORITY, BASE_PATH + "/#", LOCATION);
-	 }
+	
+	 
+	  
+	
 	
 	
 	@Override
@@ -59,7 +65,7 @@ public class LocationContentProvider extends ContentProvider{
 
 	@Override
 	public String getType(Uri uri) {
-		int uriType = matcher.match(uri);
+		int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case LOCATIONS:
             return CONTENT_TYPE;
@@ -98,7 +104,7 @@ public class LocationContentProvider extends ContentProvider{
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(LocationDB.TABLE_NAME);
         
-        int uriType = matcher.match(uri);
+        int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case LOCATION:
             queryBuilder.appendWhere(LocationDB.ID + "="

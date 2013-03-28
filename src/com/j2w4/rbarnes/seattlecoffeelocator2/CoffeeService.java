@@ -184,7 +184,7 @@ public class CoffeeService extends Service{
 						locationData.put(LocationDB.COL_STATE, location.getString("State"));
 						locationData.put(LocationDB.COL_PHONE, location.getString("Phone"));
 						locationData.put(LocationDB.COL_COORDS, location.getString("Latitude")+","+location.getString("Longitude"));
-						//getContentResolver().insert(LocationContentProvider.CONTENT_URI,locationData);
+						getContentResolver().insert(LocationContentProvider.CONTENT_URI,locationData);
 						
 						}
 

@@ -9,6 +9,8 @@
  */
 package com.j2w4.rbarnes.seattlecoffeelocator2;
 
+import java.util.HashMap;
+
 import com.rbarnes.other.LocationContentProvider;
 import com.rbarnes.other.LocationDB;
 
@@ -40,11 +42,20 @@ public class CoffeeListFragment extends ListFragment implements
                 Uri.withAppendedPath(LocationContentProvider.CONTENT_URI,
                         String.valueOf(id)), projection, null, null, null);
         if (locationCursor.moveToFirst()) {
-        	String locationNumber = locationCursor.getString(0);
+        	HashMap<String, String> currentLocation = new HashMap<String, String>();
         	
-        	Log.i("ITEM",locationNumber );
+        	currentLocation.put("Title",  locationCursor.getString(0));
+			currentLocation.put("Address", locationCursor.getString(1));
+			currentLocation.put("City", locationCursor.getString(2));
+			currentLocation.put("State", locationCursor.getString(3));
+			currentLocation.put("Phone", locationCursor.getString(4));
+			currentLocation.put("Coords", locationCursor.getString(5));
         	
-            locationSelectedListener.onlocationSelected(locationNumber);
+        	
+        	
+        	Log.i("ITEM",locationCursor.getString(0)+locationCursor.getString(1)+locationCursor.getString(2) );
+        	
+            locationSelectedListener.onlocationSelected(currentLocation);
         }
         locationCursor.close();
     }
@@ -68,7 +79,7 @@ public class CoffeeListFragment extends ListFragment implements
     }
 
     public interface OnLocationSelectedListener {
-        public void onlocationSelected(String number);
+        public void onlocationSelected(HashMap<String, String> currentLocation);
     }
 
     @Override

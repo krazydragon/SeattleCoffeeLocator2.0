@@ -2,16 +2,129 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:visibility="visible" >
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/callButton"
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_weight="1"
+            android:text="@string/blank_text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" >
 
+        <Button
+            android:id="@+id/callButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.31"
+            android:text="@string/blank_text" />
+    </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/resultGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="236dp"
+        android:layout_below="@+id/LinearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:alignmentMode="alignBounds"
+        android:columnCount="2" >
+
+        <TextView
+            android:id="@+id/cityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="35dp"
+            android:layout_row="4"
+            android:text="@string/city_label" />
+
+        <TextView
+            android:id="@+id/addressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|bottom"
+            android:layout_marginTop="30dp"
+            android:layout_row="3"
+            android:text="@string/address_label" />
+
+        <TextView
+            android:id="@+id/stateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="27dp"
+            android:layout_row="5"
+            android:text="@string/state_label" />
+
+        <TextView
+            android:id="@+id/titleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="74dp"
+            android:layout_row="1"
+            android:text="@string/title_label" />
+
+        <TextView
+            android:id="@+id/titleValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="left|bottom"
+            android:layout_row="1"
+            android:text="@string/blank_text" />
+
+        <TextView
+            android:id="@+id/addressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="left|bottom"
+            android:layout_row="3"
+            android:text="@string/blank_text" />
+
+        <TextView
+            android:id="@+id/cityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="left|bottom"
+            android:layout_row="4"
+            android:text="@string/blank_text" />
+
+        <TextView
+            android:id="@+id/stateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="left|top"
+            android:layout_row="5"
+            android:text="@string/blank_text" />
+    </GridLayout>
 </RelativeLayout>

@@ -4,5 +4,11 @@
     <string name="app_name">Seattle Coffee Locator 2.0</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+	<string name="title_label">Title:</string>
+	<string name="address_label">Address:</string>
+	<string name="city_label">City:</string>
+	<string name="state_label">State:</string>
+	<string name="phone_label">Phone Number:</string>
+	<string name="blank_text"></string>
+	
 </resources>

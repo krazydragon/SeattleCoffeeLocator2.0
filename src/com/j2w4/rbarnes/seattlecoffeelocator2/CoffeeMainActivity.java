@@ -12,6 +12,9 @@ package com.j2w4.rbarnes.seattlecoffeelocator2;
 import com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeDetailFragment.CallListener;
 import com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeListFragment.OnLocationSelectedListener;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.ActivityNotFoundException;
@@ -21,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+
 
 public class CoffeeMainActivity extends FragmentActivity implements OnLocationSelectedListener, CallListener {
 
@@ -43,6 +47,7 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 			
 		}
 		
+		Crouton.makeText(this, "this works!", Style.ALERT).show();
 		
 		setContentView(R.layout.fragment_coffee_main);
 		_callButton = (Button)findViewById(R.id.callButton);

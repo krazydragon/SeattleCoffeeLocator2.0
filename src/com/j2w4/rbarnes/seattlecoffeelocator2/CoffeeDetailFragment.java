@@ -46,7 +46,7 @@ private CallListener listener;
 	   @Override
 	   public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		   RelativeLayout view = (RelativeLayout)inflater.inflate(R.layout.fragment_coffee_detail,container,false);
-		   
+		   //setup button and listen to it
 		   Button callButton = (Button)view.findViewById(R.id.callButton);
 			
 		   	callButton.setOnClickListener(this);

@@ -68,7 +68,7 @@ public class LocationDB extends SQLiteOpenHelper{
  
     	}catch(SQLiteException e){
  
-    		//database does't exist yet.
+    		
  
     	}
     	Cursor dbCursor = checkDB.rawQuery("select * from locations", null);

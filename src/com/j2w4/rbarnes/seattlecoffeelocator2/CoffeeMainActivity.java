@@ -14,6 +14,7 @@ import java.util.HashMap;
 import com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeDetailFragment.CallListener;
 import com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeListFragment.OnLocationSelectedListener;
 import com.rbarnes.other.LocationDB;
+import com.rbarnes.other.WebInterface;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -44,10 +45,19 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 
 		
 		
-		
+		//check to see if database needs to be loaded
 		if(LocationDB.checkDataBase() == 0){
-			Crouton.makeText(this, "Thank you for installing my app!", Style.INFO).show();
-			startService(new Intent(this, CoffeeService.class));
+			//detect Internet connection
+			Boolean connected = WebInterface.getConnectionStatus(this);
+			
+			if(!connected){
+				//3rd party lib use instead of toast
+				Crouton.makeText(this, "No network found info can not be loaded!", Style.ALERT).show();
+			}else{
+				Crouton.makeText(this, "Thank you for installing my app!", Style.INFO).show();
+				startService(new Intent(this, CoffeeService.class));
+			}
+			
 		}
 		
 		setContentView(R.layout.fragment_coffee_main);
@@ -55,10 +65,11 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		_fragment = (CoffeeDetailFragment)getSupportFragmentManager().findFragmentById(R.id.detailFragment);
 		
 		
-		//If detail page is in layout hide button
+		//If detail page is in layout and has been displayed put info back into layout
 		if ((_fragment != null)&& _fragment.isInLayout() && (_currentLocation != null)){
 			displayFragment();
-			_callButton.setVisibility(View.GONE);
+			
+			
 			
 			
 		}
@@ -75,7 +86,7 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 	@Override
 	public void onlocationSelected(HashMap<String, String> currentLocation) {
 		final Intent detailIntent = new Intent(this, CoffeeDetailActivity.class);
-		//check layout
+		//check layout for fragment 
 		
 		if ((_fragment != null)&& _fragment.isInLayout()){
 			_currentLocation = new HashMap<String, String>();
@@ -91,7 +102,7 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		}
 		
 	}
-
+	//call location
 	@Override
 	public void onButtonPress() {
 		try {
@@ -112,8 +123,5 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		_callButton.setVisibility(View.VISIBLE);
 	}
 	
-	public void runService(){
-		startService(new Intent(this, CoffeeService.class));
-	}
 
 }

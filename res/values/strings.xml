@@ -10,5 +10,6 @@
 	<string name="state_label">State:</string>
 	<string name="phone_label">Phone Number:</string>
 	<string name="blank_text"></string>
+	<string name="call">Call</string>
 	
 </resources>

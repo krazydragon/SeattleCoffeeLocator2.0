@@ -15,7 +15,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/DarkTheme" >
         <activity
             android:name="com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeMainActivity"
             android:label="@string/app_name" >

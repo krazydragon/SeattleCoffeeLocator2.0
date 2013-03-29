@@ -16,5 +16,8 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
+	<style name="DarkTheme" parent="android:style/Theme.Holo">
+        <item name="android:textColorPrimary">#ffff0000</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

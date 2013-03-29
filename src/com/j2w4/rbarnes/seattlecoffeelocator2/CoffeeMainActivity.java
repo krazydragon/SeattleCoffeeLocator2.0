@@ -13,6 +13,8 @@ import java.util.HashMap;
 
 import com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeDetailFragment.CallListener;
 import com.j2w4.rbarnes.seattlecoffeelocator2.CoffeeListFragment.OnLocationSelectedListener;
+import com.rbarnes.other.LocationDB;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -34,22 +36,19 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 	String _phoneStr = "";
 	Button _callButton;
 	CoffeeDetailFragment _fragment;
-	static int serviceStarted = 0;
+	static HashMap<String, String> _currentLocation = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		
 		
 		
-		if(serviceStarted == 0){
-			//Start Service load data
-			//startService(new Intent(this, CoffeeService.class));	
-			serviceStarted ++;
-			
+		if(LocationDB.checkDataBase() == 0){
+			Crouton.makeText(this, "Thank you for installing my app!", Style.INFO).show();
+			startService(new Intent(this, CoffeeService.class));
 		}
-		
-		Crouton.makeText(this, "this works!", Style.ALERT).show();
 		
 		setContentView(R.layout.fragment_coffee_main);
 		_callButton = (Button)findViewById(R.id.callButton);
@@ -57,8 +56,8 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		
 		
 		//If detail page is in layout hide button
-		if ((_fragment != null)&& _fragment.isInLayout()){
-			
+		if ((_fragment != null)&& _fragment.isInLayout() && (_currentLocation != null)){
+			displayFragment();
 			_callButton.setVisibility(View.GONE);
 			
 			
@@ -79,13 +78,9 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		//check layout
 		
 		if ((_fragment != null)&& _fragment.isInLayout()){
-			
-			((TextView)findViewById(R.id.titleValue)).setText(currentLocation.get("Title").toString());
-			((TextView)findViewById(R.id.addressValue)).setText(currentLocation.get("Address").toString());
-			((TextView)findViewById(R.id.cityValue)).setText(currentLocation.get("City").toString());
-			((TextView)findViewById(R.id.stateValue)).setText(currentLocation.get("State").toString());
-			_phoneStr = "tel:" + (currentLocation.get("Phone").toString());
-			_callButton.setVisibility(View.VISIBLE);
+			_currentLocation = new HashMap<String, String>();
+			_currentLocation = currentLocation;
+			displayFragment();
 			
 		} else {
 			//Save color and launch picker activity
@@ -108,6 +103,17 @@ public class CoffeeMainActivity extends FragmentActivity implements OnLocationSe
 		
 	}
 
+	private void displayFragment(){
+		((TextView)findViewById(R.id.titleValue)).setText(_currentLocation.get("Title").toString());
+		((TextView)findViewById(R.id.addressValue)).setText(_currentLocation.get("Address").toString());
+		((TextView)findViewById(R.id.cityValue)).setText(_currentLocation.get("City").toString());
+		((TextView)findViewById(R.id.stateValue)).setText(_currentLocation.get("State").toString());
+		_phoneStr = "tel:" + (_currentLocation.get("Phone").toString());
+		_callButton.setVisibility(View.VISIBLE);
+	}
 	
+	public void runService(){
+		startService(new Intent(this, CoffeeService.class));
+	}
 
 }

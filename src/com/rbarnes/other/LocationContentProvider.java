@@ -94,6 +94,7 @@ public class LocationContentProvider extends ContentProvider{
 	@Override
 	public boolean onCreate() {
 		db = new LocationDB(getContext()).getWritableDatabase();
+
 		return (db == null) ? false : true;
 	}
 
@@ -134,4 +135,5 @@ public class LocationContentProvider extends ContentProvider{
 		return retVal;
 	}
 
+	
 }

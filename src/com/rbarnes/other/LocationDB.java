@@ -9,15 +9,20 @@
  */
 package com.rbarnes.other;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+@SuppressLint("SdCardPath")
 public class LocationDB extends SQLiteOpenHelper{
 
 	
 	private static final String DEBUG_TAG = "LocationDatabase";
+	private static String DB_PATH = "/data/data/com.j2w4.rbarnes.seattlecoffeelocator2/databases/";
 	public static final String DB_NAME = "locationDB";
 	private static final int DB_VERSION = 1;
 	
@@ -53,6 +58,30 @@ public class LocationDB extends SQLiteOpenHelper{
 	    
 	}
 
+	public static int checkDataBase(){
+		 
+    	SQLiteDatabase checkDB = null;
+ 
+    	try{
+    		String myPath = DB_PATH + DB_NAME;
+    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+ 
+    	}catch(SQLiteException e){
+ 
+    		//database does't exist yet.
+ 
+    	}
+    	Cursor dbCursor = checkDB.rawQuery("select * from locations", null);
+    	if(checkDB != null){
+    		//check database count to see if empty 
+    		
+    	    Log.i("DATABASE COUNT", ""+ dbCursor.getCount());
+    		checkDB.close();
+ 
+    	}
+ 
+    	return dbCursor.getCount();
+    }
 
 	
 }

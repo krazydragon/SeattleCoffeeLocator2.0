@@ -49,6 +49,7 @@ public class CoffeeService extends Service{
 		 if (connected){
 				Log.i("SERVICE", "CONNECTED");
 			}else{
+				
 				Log.i("SERVICE", "NOT CONNECTED");
 			}
 		 getLocations("Coffee", "98101");

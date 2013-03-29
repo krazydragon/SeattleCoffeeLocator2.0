@@ -69,7 +69,5 @@ private CallListener listener;
 		}catch(ClassCastException e){
 			throw new ClassCastException(activity.toString() + "did not Implemnt Call Listener!");
 		}
-	}{
-
-		}	
+	}	
 }

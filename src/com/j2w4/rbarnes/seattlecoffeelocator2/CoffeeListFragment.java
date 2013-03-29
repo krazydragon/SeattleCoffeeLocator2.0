@@ -58,6 +58,7 @@ public class CoffeeListFragment extends ListFragment implements
             locationSelectedListener.onlocationSelected(currentLocation);
         }
         locationCursor.close();
+        
     }
 
     @Override
@@ -76,6 +77,8 @@ public class CoffeeListFragment extends ListFragment implements
 
         setListAdapter(adapter);
         setHasOptionsMenu(true);
+        
+        
     }
 
     public interface OnLocationSelectedListener {
